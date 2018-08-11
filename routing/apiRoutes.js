@@ -6,33 +6,47 @@ module.exports = (app) => {
     })
     app.post("/api/friends", (req,res) => {
         var bestMatch={
-            name:'James Campfield',
-            photo:'https://c1.staticflickr.com/8/7631/16506404064_a78b3db185_b.jpg',
-            points:100000000
+            name:'',
+            photo:'',
+            points:null
             }
-       //console.log("USER DATA FROM FRON: ", req.body)
+       console.log("USER DATA FROM FRON: ", req.body)
         var user ={
             name:req.body.name,
             photo:req.body.photo,
             scores:req.body.scores
         }
-        var totDiff = 0;
+        
+        
         for(var i=0;i<surveyData.length;i++){
-            for(var j=0;j<surveyData.scores;j++){
-            var currentScore = user.scores[j];
-            var friendsScore = surveyData.scores[j];
-             totDiff += (Math.abs(parseInt(currentScore))) - (Math.abs(parseInt(friendsScore)));
-             console.log(totDiff);
+            var totDiff = 0;
+            var currentFriend = surveyData[i];
+            for(var j=0;j<currentFriend.scores.length;j++){
+            var currentScore = user.scores[i];
+            var friendsScore = currentFriend.scores[j];
+             totDiff += Math.abs(parseInt(currentScore) - parseInt(friendsScore));
+
+             console.log("Current difference" ,totDiff);
+
+            }
+            
+            if(bestMatch.points === null || totDiff <= bestMatch.points){
+
+                bestMatch.points = totDiff;
+                bestMatch.name = currentFriend.name;
+                bestMatch.photo = currentFriend.photo;
+            }
         }
                 // use iF statement to check if totoalDiff is less then bestMatch.points
-                if(totDiff < parseInt(bestMatch.points)){
-                    console.log("set best math");
+                
+                    
+                    res.json(bestMatch);
+                
 
-                } else {
-
-                }
+                
                 // if so set bestMatch.name, bestmatch.phot, and send back to front using res.json
-    }
+    
+        
     surveyData.push(req.body)
     })
 }
