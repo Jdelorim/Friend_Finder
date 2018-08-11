@@ -1,4 +1,4 @@
-var friendsDATA = [{
+module.exports  = [{
     "name":"Josh",
     "photo":"http://www.homelesscatnetwork.com/uploads/1/4/7/4/14749424/1382319449.jpg",
     "scores":[5,1,4,4,5,1,2,5,2,1]
@@ -11,4 +11,3 @@ var friendsDATA = [{
 
 ];
 
-module.exports = friendsDATA;
